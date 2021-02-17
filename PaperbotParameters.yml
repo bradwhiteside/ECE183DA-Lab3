@@ -1,0 +1,13 @@
+roomWidth: 10000
+roomHeight: 10000
+d: 50
+l: 75
+w: 90
+startingX: 500
+startingY: 500
+startingAngle: 90
+# in degress ^
+maxrpm: 130
+lstddev: 0
+astddev: 0
+mstddev: 0
