@@ -1,181 +1,137 @@
-import sys
 import numpy as np
-import matplotlib.pyplot as plt
 import math
-import csv
-import yaml
-import pygame
-from pygame.locals import *
-import time
-from mini_bot import Agent
 
-INPUT_FILE = "Inputs/Segway3.csv"
-PARAMETER_FILE = "SegwayParameters.yml"
-OUTPUT_FILE = "output.csv"
+def L2_norm(a, b):
+    return math.sqrt(a**2 + b**2)
 
+def get_distance(x, y, W, L, theta):
+    if (theta % 360 == 0):
+        return W-x
+    elif (theta % 360== 90):
+        return y
+    elif (theta % 360 == 180):
+        return x
+    elif (theta % 360 == 270):
+        return L-y
 
-# $ pip install pygame
-# code for pygame taken from this tutorial:
-# https://coderslegacy.com/python/python-pygame-tutorial/
-def loop(robot, init_state):
-    outputFile = open("output.csv", "w")
-    w = robot.width
-    l = robot.length
-    xOffset = robot.S[0] - (l // 2)
-    yOffset = robot.S[1] - (w // 2)
-    START = (robot.S[0], robot.S[1], robot.S[2])
+    t = np.radians(theta)
+    if (theta < 90):
+        b1 = y
+        a1 = b1 * math.cot(t)
+        a2 = W-x
+        b2 = a2 * math.tan(t)
+    elif (theta < 180):
+        b1 = y
+        a1 = b1 * math.cot(t)
+        a2 = x
+        b2 = a2 * math.tan(t)
+    elif (theta < 270):
+        a1 = x
+        b1 = a1 * math.tan(t)
+        b2 = L-y
+        a2 = b2 * math.cot(t)
+    else:
+        a1 = W-x
+        b1 = a1 * math.tan(t)
+        b2 = L-y
+        a2 = b2 * math.cot(t)
 
-    states = list()
-    # pygame.init()
-    # screen = pygame.display.set_mode((P["roomWidth"], P["roomHeight"]))
-    with open(INPUT_FILE) as csvFile:
-        csvReader = csv.reader(csvFile, delimiter=',')
-        inputs = list(csvReader)
-        STATE_SIZE = 3
+    return min(L2_norm(a1, b1), L2_norm(a2, b2))
 
-        time = np.linspace(0, 5, num=501)
-        states = np.zeros((len(inputs), STATE_SIZE))
-        displacement = np.zeros((len(inputs), 2))
-        angular_displacement = np.zeros((len(inputs), 1))
-        angular_velocity = np.zeros((len(inputs), 1))
-        wheel_angular_velocity = np.zeros((len(inputs), 2))
+class Agent:
+    def __init__(self, init_state=[0, 0, 0], w=530, l=682, d=502, rw=10000, rl=10000, maxrpm=130, lstddev=0.03, astddev=8,
+                 mstddev=1):
+        self.S = np.reshape(np.array(init_state), (3, 1))
+        print(self.S)
+        self.width = w
+        self.length = l
+        self.diameter = d
+        self.room_width = rw  # x-direction
+        self.room_length = rl  # y-direction
+        self.delta_t = 0.01
+        self.wl = 0
+        self.wr = 0
+        self.MAXRPM = maxrpm
+        self.lidarStdDev = lstddev  # = 3%
+        self.accelerometerStdDev = astddev  # = 8 mg-rms
+        self.magnetometerStdDev = mstddev
+        self.PWM_std = [0, 0]
+        self.Wheel_std = [0, 0]
 
-        for i in range(len(inputs)):
-            # detect quit
-            # for event in pygame.event.get():
-            #     if event.type == QUIT:
-            #         outputFile.close()
-            #         pygame.quit()
-            #         sys.exit()
-            print(inputs[i])
-            robot.state_update(inputs[i])
-            states[i, :] = robot.S.T
-            displacement[i, :] = np.array((robot.S[0] - START[0], robot.S[1] - START[1])).T
-            angular_displacement[i, :] = robot.S[2] - START[2]
-            angular_velocity[i, :] = robot.get_IMU_velocity()
-            wheel_angular_velocity[i, :] = np.array((robot.wl, robot.wr)).T
+    def PWM_to_RPM(self, x):
+        s = np.sign(x)
+        k = 0.05
+        if (np.abs(x) > 100):
+            return self.MAXRPM * s
 
-            #time.sleep(0.1)
-            # print(state)
+        return self.MAXRPM * s * np.exp(s * k * x) / (np.exp(k * 100))
 
-            # get output
-            # output = robot.get_observation()
-            # outputText = str(round(output[0][0], 3))[:-1] + " "
-            # outputText += str(round(output[0][1], 3))[:-1] + " "
-            # outputText += str(round(output[1], 3))[:-1] + " "
-            # outputText += str(round(output[2][0], 3))[:-1] + " "
-            # outputText += str(round(output[2][1], 3)) + "\n"
-            # outputFile.write(outputText)
-            # print(outputText)
+    def DPS_RadS(self, x):
 
-            # draw
-            # screen.fill((0, 0, 0))
-            # angle = robot.S[2] * 180 / np.pi
-            # surf = pygame.Surface((l, w)).convert_alpha()
-            # surf.fill((0, 128, 255))
-            # x = xOffset + robot.S[0]
-            # y = yOffset + robot.S[1]
-            # blitRotate(screen, surf, (x, y), (l // 2, w // 2), -angle)
-            # pygame.display.update()
+        return x * np.pi/180
 
-        print("State ls is: ", states.shape)
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        plt.plot(states[:, 0], states[:, 1])
-        plt.xlabel('x mm')
-        plt.ylabel('y mm')
-        plt.title(INPUT_FILE[7:-4] + "_Simulation")
-        plt.grid()
-        ax.set_aspect('equal', adjustable='box')
-        #plt.show()
-        print("ploted")
+    #Convert the angle to -pi tp pi range
+    def pi_2_pi(self, a):
+        return (a + np.pi) % (2 * np.pi) - np.pi
+    
 
-        fig, axs = plt.subplots(2, 2)
-        axs[0, 0].plot(time, displacement[:, 0], label="x")
-        axs[0, 0].plot(time, displacement[:, 1], label="y")
-        axs[0, 0].set_xlabel('time')
-        axs[0, 0].set_ylabel('mm')
-        axs[0, 0].set_title(INPUT_FILE[7:-4] + "_Displacement")
-        axs[0, 0].grid()
+    def state_update(self, PWM_signal):
+        '''
+        Moving to the next step given the input u
+        return : s
+        '''
+        u = [0, 0]
+        k_l = 1
+        k_r = 1
 
-        axs[0, 1].plot(time, np.degrees(angular_displacement))
-        axs[0, 1].set_xlabel('time')
-        axs[0, 1].set_ylabel('degrees')
-        axs[0, 1].set_title(INPUT_FILE[7:-4] + "_Angular_Displacement")
-        axs[0, 1].grid()
-
-        axs[1, 0].plot(time, np.degrees(angular_velocity))
-        axs[1, 0].set_xlabel('time')
-        axs[1, 0].set_ylabel('degrees/sec')
-        axs[1, 0].set_title(INPUT_FILE[7:-4] + "_Angular_Velocity")
-        axs[1, 0].grid()
-
-        axs[1, 1].plot(time, np.degrees(wheel_angular_velocity[:, 0]), label="left")
-        axs[1, 1].plot(time, np.degrees(wheel_angular_velocity[:, 1]), label="right")
-        axs[1, 1].set_xlabel('time')
-        axs[1, 1].set_ylabel('degrees/sec')
-        axs[1, 1].set_title(INPUT_FILE[7:-4] + "_Wheel_Angular_Displacement")
-        axs[1, 1].grid()
-
-        fig.subplots_adjust(hspace=0.35)
-        plt.show()
-
-        # convert radians to degrees
-        states[:, 2] = np.degrees(states[:, 2])
-        output_matrix = states
-        output_matrix = np.column_stack((output_matrix, displacement))
-        output_matrix = np.column_stack((output_matrix, angular_displacement))
-        output_matrix = np.column_stack((output_matrix, angular_velocity))
-        output_matrix = np.column_stack((output_matrix, wheel_angular_velocity))
-        np.savetxt(OUTPUT_FILE, output_matrix, delimiter=',', fmt='%.4f')
-        # x, y, theta, x_disp, y_disp, theta_disp, omega, left_wheel_omega, right_wheel_omega
-
-# adjust coords so the surface rotates about its center
-# https://stackoverflow.com/questions/4183208/how-do-i-rotate-an-image-around-its-center-using-pygame
-def blitRotate(surf, image, pos, originPos, angle):
-    # calcaulate the axis aligned bounding box of the rotated image
-    w, h = image.get_size()
-    box = [pygame.math.Vector2(p) for p in [(0, 0), (w, 0), (w, -h), (0, -h)]]
-    box_rotate = [p.rotate(angle) for p in box]
-    min_box = (min(box_rotate, key=lambda p: p[0])[0], min(box_rotate, key=lambda p: p[1])[1])
-    max_box = (max(box_rotate, key=lambda p: p[0])[0], max(box_rotate, key=lambda p: p[1])[1])
-
-    # calculate the translation of the pivot
-    pivot = pygame.math.Vector2(originPos[0], -originPos[1])
-    pivot_rotate = pivot.rotate(angle)
-    pivot_move = pivot_rotate - pivot
-
-    # calculate the upper left origin of the rotated image
-    origin = (pos[0] - originPos[0] + min_box[0] - pivot_move[0], pos[1] - originPos[1] - max_box[1] + pivot_move[1])
-
-    # get a rotated image
-    rotated_image = pygame.transform.rotate(image, angle)
-
-    # rotate and blit the image
-    surf.blit(rotated_image, (origin[0][0], origin[1][0]))
+        # u[0] = self.PWM_to_RPM(float(PWM_signal[0]) + np.random.normal(0,self.PWM_std[0])) + np.random.normal(0,self.Wheel_std[0])
+        # u[1] = self.PWM_to_RPM(float(PWM_signal[1]) + np.random.normal(0,self.PWM_std[1])) + np.random.normal(0,self.Wheel_std[1])
+        self.wl = self.DPS_RadS(float(PWM_signal[0])) +  np.random.normal(0,self.Wheel_std[0])
+        self.wr = self.DPS_RadS(float(PWM_signal[1])) + np.random.normal(0,self.Wheel_std[1])
 
 
-def main():
-    """
-    Main Loop for the simulation.
-    inputFile will be a csv file seperated by spaces where each line will have two integers
-    between 0 and 255. These will represent the 2 inputs
-    """
-    # load parameters
-    P = {}
-    with open(PARAMETER_FILE) as pFile:
-        P = yaml.load(pFile, Loader=yaml.FullLoader)
+        # self.wl = self.MAXRPM * (np.pi / 30) * (u[0] / 100)  # + np.random.normal(0, self.PWM_std[0])
+        # self.wr = self.MAXRPM * (np.pi / 30) * (u[1] / 100)  # + np.random.normal(0, self.PWM_std[1])
+        # v = u[0]
+        # ommega = u[1]
+        u = np.vstack((self.wl, self.wr))
+        print("u is:", u)
 
-    init_state = [P["startingX"], P["startingY"], np.radians(P['startingAngle'])]
-    robot = Agent(init_state, P['w'], P['l'], P['d'], P['roomWidth'], P['roomHeight'],
-                  P['maxrpm'], P['lstddev'], P['astddev'], P['mstddev'])
-    loop(robot, init_state)
+        B = np.array([[np.cos(self.S[2, 0]), 0],
+                      [np.sin(self.S[2, 0]), 0],
+                      [0, 1]])
 
-    #init_state = [5000, 5000, np.pi/2]
+        Dynamixs = np.array([[self.diameter / 4, self.diameter / 4],
+                             [-self.diameter / (2 * self.width), self.diameter / (2 * self.width)]])
 
-    #robot = Agent(init_state=init_state)
-    #loop(P, robot, init_state)
+        self.S = + self.S + (B @ Dynamixs @ u) * self.delta_t
+        self.S[2,0] = self.pi_2_pi(self.S[2,0])
+
+        return self.S
+
+    def get_lidar_readings(self):
+        front_lidar = \
+            get_distance(self.S[0], self.S[1], self.room_width,
+                         self.room_length, self.theta)
+        right_lidar = \
+            get_distance(self.S[0], self.S[1], self.room_width,
+                         self.room_length, self.theta - 90)
+        return front_lidar, right_lidar
+
+    def get_IMU_velocity(self):
+        omega = ((self.wl - self.wr) / self.width) * (self.diameter / 2)
+        return omega + np.random.normal(0, self.accelerometerStdDev)
+
+    def get_IMU_position(self):
+        return (math.cos(self.S[2, 0]) + np.random.normal(0, self.magnetometerStdDev), \
+                math.sin(self.S[2, 0]) + np.random.normal(0, self.magnetometerStdDev))
+
+    def get_observation(self):
+        # do the sensor output readings here
+        L = self.get_lidar_readings()
+        velocity = self.get_IMU_velocity()
+        pos = self.get_IMU_position()
+        return L, velocity, pos
 
 
-if __name__ == "__main__":
-    main()
+
