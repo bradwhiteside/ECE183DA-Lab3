@@ -1,0 +1,216 @@
+Velocity Values for Trajectories
+
+all inputs in rad/s
+
+S1A,S1B,S1C,S1D (S1D is no noise)
+  if time<5
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-6);
+  elseif time>=5 && time<10
+    wb_motor_set_velocity(motor_R,4);
+    wb_motor_set_velocity(motor_L,-8);
+  elseif time>=10 && time<15
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-6);
+  elseif time>=15
+    wb_motor_set_velocity(motor_R,-8);
+    wb_motor_set_velocity(motor_L,-2);
+  end
+
+S2
+  if time<4
+    wb_motor_set_velocity(motor_R,-8);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,-4);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-6);
+    wb_motor_set_velocity(motor_L,6);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-6);
+    wb_motor_set_velocity(motor_L,-6);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-6);
+  end
+
+S3
+  if time<4
+    wb_motor_set_velocity(motor_R,-8);
+    wb_motor_set_velocity(motor_L,-8);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-8);
+    wb_motor_set_velocity(motor_L,8);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,-4);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-6);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,-1);
+  end
+
+S10A,S10B,S10C,S10D (S10D is no noise)
+  if time<4
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-2);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,2);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-3);
+    wb_motor_set_velocity(motor_L,-3);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+  end
+
+S11
+  if time<4
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,1);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-4);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+  end
+
+S12
+  if time<4
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-6);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,4);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-3);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-2);
+  end
+
+P1A,P1B,P1C,P1D (1D is no noise)
+  if time<4
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-2);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,2);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-3);
+    wb_motor_set_velocity(motor_L,-3);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-3);
+  end
+
+P2
+  if time<4
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-2);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-3);
+    wb_motor_set_velocity(motor_L,3);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-3);
+  end
+
+P3
+  if time<4
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-3);
+    wb_motor_set_velocity(motor_L,-3);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-4);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-2);
+  end
+
+P10A,P10B,P10C,P10D (P10D is no noise)
+  if time<4
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-2);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,2);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-3);
+    wb_motor_set_velocity(motor_L,-3);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+  end
+
+P11
+  if time<4
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,1);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-4);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+  end
+
+P12
+  if time<4
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-6);
+  elseif time>=4 && time<8
+    wb_motor_set_velocity(motor_R,-4);
+    wb_motor_set_velocity(motor_L,4);
+  elseif time>=8 && time<12
+    wb_motor_set_velocity(motor_R,-3);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=12 && time<16
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+  elseif time>=16
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-2);
+  end

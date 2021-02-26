@@ -166,7 +166,7 @@ def path_4(time):
     if time < 10000:
         return 1, 1
     else:
-        return -3, 1
+        return -1, -3
 
 def path_5(time):
     if time < 5000:
@@ -238,7 +238,7 @@ def path_16(time):
     if time < 8000:
         return 2, 2
     elif time < 12000:
-        return -5, 2
+        return -5, -2
     else:
         return -1, -5
 
