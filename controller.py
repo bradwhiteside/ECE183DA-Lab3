@@ -19,7 +19,7 @@ PAPERBOT_COMPARISON_FILES = \
      "webots_outputs/P18.txt"]
 PAPERBOT_PLOT_NAMES = \
     ["Paperbot2", "Paperbot3", "Paperbot4", "Paperbot5", "Paperbot6", "Paperbot7", "Paperbot8", "Paperbot9", "Paperbot11",
-     "Paperbot12", "Paperbot13", "Paperbot14", "Paperbot15", "Paperbot16", "Paperbot17", "Paperbot17", "Paperbot18"]
+     "Paperbot12", "Paperbot13", "Paperbot14", "Paperbot15", "Paperbot16", "Paperbot17", "Paperbot18"]
 
 SEGWAY_INPUT_FILES = \
     ["analytic_inputs/path_S2", "analytic_inputs/path_S3", "analytic_inputs/path_4", "analytic_inputs/path_5",
@@ -33,7 +33,7 @@ SEGWAY_COMPARISON_FILES = \
      "webots_outputs/S18.txt"]
 SEGWAY_PLOT_NAMES = \
     ["Segway2", "Segway3", "Segway4", "Segway5", "Segway6", "Segway7", "Segway8", "Segway9", "Segway11",
-     "Segway12", "Segway13", "Segway14", "Segway15", "Segway16", "Segway17", "Segway17", "Segway18"]
+     "Segway12", "Segway13", "Segway14", "Segway15", "Segway16", "Segway17", "Segway18"]
 
 PARAMETER_FILE = "PaperbotParameters.yml"
 
@@ -120,7 +120,7 @@ def blitRotate(surf, image, pos, originPos, angle):
 
 
 def main():
-    PAPERBOT_SIM = False
+    PAPERBOT_SIM = True
 
     if PAPERBOT_SIM:
         with open("PaperbotParameters.yml") as pFile:
