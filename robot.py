@@ -116,12 +116,12 @@ class Agent:
         right_lidar = \
             get_distance(self.S[0], self.S[1], self.room_width,
                          self.room_length, self.S[2] - 90)
-        return np.random.normal(front_lidar, front_lidar * self.lidarStdDev),\
-               np.random.normal(right_lidar, right_lidar * self.lidarStdDev)
+        return np.random.normal(front_lidar, abs(front_lidar * self.lidarStdDev)),\
+               np.random.normal(right_lidar, abs(right_lidar * self.lidarStdDev))
 
     def get_IMU_velocity(self):
         omega = ((self.wl - self.wr) / self.width) * (self.diameter / 2)
-        return np.random.normal(omega, omega * self.accelerometerStdDev)
+        return np.random.normal(omega, abs(omega * self.accelerometerStdDev))
 
     def get_IMU_position(self):
         x = math.cos(self.S[2, 0])

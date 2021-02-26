@@ -9,8 +9,8 @@ from plots import plot
 
 #INPUT_FILE = "Inputs/Segway3.csv"
 INPUT_FILE = "analytic_inputs/path_13"
-COMPARISON_FILE = "all_inputs/S13.txt"
-PARAMETER_FILE = "SegwayParameters.yml"
+COMPARISON_FILE = "all_inputs/P13.txt"
+PARAMETER_FILE = "PaperbotParameters.yml"
 OUTPUT_FILE = "Output_Analytical.csv"
 
 # $ pip install pygame
@@ -45,7 +45,7 @@ def loop(robot):
             except IndexError:
                 break
             data = robot.get_observation()
-            lidar[i] = np.array(data[0:2])
+            lidar[i] = data[:2]
             gyro[i] = data[2]
             compass[i] = np.array(data[3:])
             position[i] = robot.S.reshape((3,))

@@ -77,7 +77,7 @@ def plot(INPUT_FILE_1, INPUT_FILE_2):
     axs[3, 0].set_title("Analytic vs Webots X Position")
     axs[3, 0].grid()
     axs[3, 0].legend()
-
+    """
     axs[3, 1].plot(time, pos1[:, 1] / 1000, label="analytic")
     axs[3, 1].plot(time, pos2[:, 1], label="webots")
     axs[3, 1].set_xlabel('time')
@@ -94,7 +94,7 @@ def plot(INPUT_FILE_1, INPUT_FILE_2):
     axs[3, 1].set_title("Analytic vs Webots Trajectories")
     axs[3, 1].grid()
     axs[3, 1].legend()
-    """
+    
 
     fig.subplots_adjust(hspace=0.35)
     plt.show()
