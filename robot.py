@@ -48,7 +48,7 @@ class Agent:
         self.diameter = d
         self.room_width = rw  # x-direction
         self.room_length = rl  # y-direction
-        self.delta_t = 0.01
+        self.delta_t = 0.005
         self.wl = 0
         self.wr = 0
         self.MAXRPM = maxrpm
@@ -112,10 +112,10 @@ class Agent:
     def get_lidar_readings(self):
         front_lidar = \
             get_distance(self.S[0], self.S[1], self.room_width,
-                         self.room_length, self.theta)
+                         self.room_length, self.S[2])
         right_lidar = \
             get_distance(self.S[0], self.S[1], self.room_width,
-                         self.room_length, self.theta - 90)
+                         self.room_length, self.S[2] - 90)
         return front_lidar, right_lidar
 
     def get_IMU_velocity(self):
