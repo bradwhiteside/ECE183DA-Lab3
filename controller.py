@@ -120,7 +120,7 @@ def blitRotate(surf, image, pos, originPos, angle):
 
 
 def main():
-    PAPERBOT_SIM = True
+    PAPERBOT_SIM = False
 
     if PAPERBOT_SIM:
         with open("PaperbotParameters.yml") as pFile:

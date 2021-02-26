@@ -52,9 +52,9 @@
   wb_motor_set_velocity(motor_L,2);
   elseif time < 12
   wb_motor_set_velocity(motor_R,-2);
-  wb_motor_set_velocity(motor_L,-5);
+  wb_motor_set_velocity(motor_L,-3);
   else
-  wb_motor_set_velocity(motor_R,-5);
+  wb_motor_set_velocity(motor_R,-3);
   wb_motor_set_velocity(motor_L,-1);
   end
   
@@ -70,11 +70,11 @@
   wb_motor_set_velocity(motor_L,-5);
   end
   
-  %path 18
-  %if time < 10
-  %wb_motor_set_velocity(motor_R,-5);
-  %wb_motor_set_velocity(motor_L,-1);
-  %else
-  %wb_motor_set_velocity(motor_R,-1);
-  %wb_motor_set_velocity(motor_L,-5);
-  %end
+  path 18
+  if time < 10
+  wb_motor_set_velocity(motor_R,-5);
+  wb_motor_set_velocity(motor_L,-1);
+  else
+  wb_motor_set_velocity(motor_R,-1);
+  wb_motor_set_velocity(motor_L,-5);
+  end

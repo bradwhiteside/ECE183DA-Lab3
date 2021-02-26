@@ -238,9 +238,9 @@ def path_16(time):
     if time < 8000:
         return 2, 2
     elif time < 12000:
-        return -5, -2
+        return -3, -2
     else:
-        return -1, -5
+        return -3, -1
 
 def path_17(time):
     if time < 4000:
