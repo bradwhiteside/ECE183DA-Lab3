@@ -36,13 +36,13 @@ SEGWAY_PLOT_NAMES = \
      "Segway12", "Segway13", "Segway14", "Segway15", "Segway16", "Segway17", "Segway17", "Segway18"]
 
 PARAMETER_FILE = "PaperbotParameters.yml"
-OUTPUT_FILE = "Output_Analytical.csv"
 
 # $ pip install pygame
 # code for pygame taken from this tutorial:
 # https://coderslegacy.com/python/python-pygame-tutorial/
 def loop(robot, input_file, comparison_file, plot_name):
-    outputFile = open(OUTPUT_FILE, "w")
+    output_file = "analytic_outputs/" + plot_name + ".csv"
+    outputFile = open(output_file, "w")
     """column_headers = np.array(['time', 'lidar_F', 'lidar_R',
                                'gyro', 'compass_x', 'compass_y'])
     np.savetxt(OUTPUT_FILE, column_headers)"""
@@ -90,9 +90,9 @@ def loop(robot, input_file, comparison_file, plot_name):
         output_matrix = np.column_stack((output_matrix, gyro))
         output_matrix = np.column_stack((output_matrix, compass))
         output_matrix = np.column_stack((output_matrix, position))
-        np.savetxt(OUTPUT_FILE, output_matrix, delimiter=' ', fmt='%.4f')
+        np.savetxt(output_file, output_matrix, delimiter=' ', fmt='%.4f')
 
-        plot(OUTPUT_FILE, comparison_file, plot_name)
+        plot(output_file, comparison_file, plot_name)
 
 # adjust coords so the surface rotates about its center
 # https://stackoverflow.com/questions/4183208/how-do-i-rotate-an-image-around-its-center-using-pygame
@@ -120,7 +120,7 @@ def blitRotate(surf, image, pos, originPos, angle):
 
 
 def main():
-    """""
+
     with open("PaperbotParameters.yml") as pFile:
         P = yaml.load(pFile, Loader=yaml.FullLoader)
 
@@ -140,7 +140,7 @@ def main():
 
         for i in range(len(SEGWAY_INPUT_FILES)):
             loop(robot, SEGWAY_INPUT_FILES[i], SEGWAY_COMPARISON_FILES[i], SEGWAY_PLOT_NAMES[i])
-
+    """
 
 
 if __name__ == "__main__":
