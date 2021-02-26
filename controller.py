@@ -34,9 +34,15 @@ def loop(robot):
         lidar = np.zeros((len(time), 2))
         gyro = np.zeros((len(time), 1))
         compass = np.zeros((len(time), 2))
+        position = np.zeros((len(time), 2))
 
         for i in range(len(time)):
             robot.state_update(inputs[i])
+            data = robot.get_observation()
+            lidar[i] = data[0:2]
+            gyro[i] = data[2]
+            compass[i] = data[3:]
+            position[i] = robot.S
 
             """# draw
             screen.fill((0, 0, 0))
@@ -52,6 +58,7 @@ def loop(robot):
         output_matrix = np.column_stack((output_matrix, lidar))
         output_matrix = np.column_stack((output_matrix, gyro))
         output_matrix = np.column_stack((output_matrix, compass))
+        output_matrix = np.column_stack((output_matrix, position))
         np.savetxt(OUTPUT_FILE, output_matrix, delimiter=' ', fmt='%.4f')
 
         plot(OUTPUT_FILE)
