@@ -126,8 +126,8 @@ class Agent:
     def get_IMU_position(self):
         x = math.cos(self.S[2, 0])
         y = math.sin(self.S[2, 0])
-        return np.random.normal(x, x * self.magnetometerStdDev), \
-            np.random.normal(y, y * self.magnetometerStdDev)
+        return np.random.normal(x, abs(x * self.magnetometerStdDev)), \
+            np.random.normal(y, abs(y * self.magnetometerStdDev))
 
     def get_observation(self):
         # do the sensor output readings here
