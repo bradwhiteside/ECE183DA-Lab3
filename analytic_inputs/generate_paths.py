@@ -260,9 +260,10 @@ def create_input_file_from_func(file_name, func, time_step, max_time):
     time = np.arange(0, max_time + time_step, time_step)
     inputs = np.zeros((time.shape[0], 2))
     for i in range(time.shape[0]):
-        inputs[i] = func(time[i])
+        values = func(time[i])
+        inputs[i] = [-10*values[0],-10*values[1]] # scale paths to account for webots vs python differences
 
-    np.savetxt(file_name, inputs, delimiter=' ', fmt='%.4f')
+    np.savetxt(file_name, inputs, delimiter=',', fmt='%.4f')
 
 def main():
     paths = [path_spin, path_turn, path_S1_ABCD, path_S2, path_S3, path_S10_ABCD, path_S11, path_S12, path_P1_ABCD, path_P2, path_P3, path_P10_ABCD, path_P11, path_S12, path_4, path_5, path_6, path_7, path_8, path_9, path_13, path_14, path_15, path_16, path_17, path_18]
