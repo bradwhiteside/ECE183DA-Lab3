@@ -100,4 +100,4 @@ def plot(INPUT_FILE_1, INPUT_FILE_2, PLOT_NAME):
     fig.canvas.set_window_title(PLOT_NAME)
     fig.suptitle(PLOT_NAME, y=0.995)
     plt.savefig("saved_plots/" + PLOT_NAME + ".png")
-    plt.show()
+    #plt.show()
