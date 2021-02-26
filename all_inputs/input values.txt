@@ -1,0 +1,79 @@
+Trajectory 4
+
+  if time < 10
+    wb_motor_set_velocity(motor_R,1);
+    wb_motor_set_velocity(motor_L,1);
+  else
+    wb_motor_set_velocity(motor_R,-3);
+    wb_motor_set_velocity(motor_L,-1);
+  end
+
+Trajectory 5
+
+ if time < 5
+    wb_motor_set_velocity(motor_R,2);
+    wb_motor_set_velocity(motor_L,1);
+  elseif time < 10
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-1);
+   else
+     wb_motor_set_velocity(motor_R,-1);
+     wb_motor_set_velocity(motor_L,-1);
+  end
+  
+Trajectory 6
+
+  if time < 5
+    wb_motor_set_velocity(motor_R,2);
+    wb_motor_set_velocity(motor_L,0);
+  elseif time < 10
+    wb_motor_set_velocity(motor_R,0);
+    wb_motor_set_velocity(motor_L,2);
+   else
+     wb_motor_set_velocity(motor_R,-1);
+     wb_motor_set_velocity(motor_L,-1);
+  end
+
+Turn
+
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-2);
+
+Trajectory 13
+
+  if time < 5
+    wb_motor_set_velocity(motor_R,1);
+    wb_motor_set_velocity(motor_L,1);
+  elseif time < 10
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,2);
+   else
+     wb_motor_set_velocity(motor_R,-1);
+     wb_motor_set_velocity(motor_L,-1);
+  end
+
+Trajectory 14
+
+  if time < 5
+    wb_motor_set_velocity(motor_R,-1);
+    wb_motor_set_velocity(motor_L,-2);
+  elseif time < 10
+    wb_motor_set_velocity(motor_R,2);
+    wb_motor_set_velocity(motor_L,2);
+   else
+     wb_motor_set_velocity(motor_R,-2);
+     wb_motor_set_velocity(motor_L,-1);
+  end
+
+Trajectory 15
+
+  if time < 5
+    wb_motor_set_velocity(motor_R,-2);
+    wb_motor_set_velocity(motor_L,-2);
+  elseif time < 10
+    wb_motor_set_velocity(motor_R,1);
+    wb_motor_set_velocity(motor_L,1);
+   else
+     wb_motor_set_velocity(motor_R,-3);
+     wb_motor_set_velocity(motor_L,-1);
+  end
