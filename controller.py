@@ -8,9 +8,10 @@ from robot import Agent
 from plots import plot
 
 #INPUT_FILE = "Inputs/Segway3.csv"
-INPUT_FILE = "analytic_inputs/path_13"
-COMPARISON_FILE = "all_inputs/P13.txt"
-PARAMETER_FILE = "PaperbotParameters.yml"
+INPUT_FILE = "analytic_inputs/path_4"
+COMPARISON_FILE = "all_inputs/S4.txt"
+PLOT_NAME = "Segway4"
+PARAMETER_FILE = "SegwayParameters.yml"
 OUTPUT_FILE = "Output_Analytical.csv"
 
 # $ pip install pygame
@@ -67,7 +68,7 @@ def loop(robot):
         output_matrix = np.column_stack((output_matrix, position))
         np.savetxt(OUTPUT_FILE, output_matrix, delimiter=' ', fmt='%.4f')
 
-        plot(OUTPUT_FILE, COMPARISON_FILE)
+        plot(OUTPUT_FILE, COMPARISON_FILE, PLOT_NAME)
 
 # adjust coords so the surface rotates about its center
 # https://stackoverflow.com/questions/4183208/how-do-i-rotate-an-image-around-its-center-using-pygame
