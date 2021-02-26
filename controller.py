@@ -10,21 +10,21 @@ from plots import plot
 PAPERBOT_INPUT_FILES = \
     ["analytic_inputs/path_P2", "analytic_inputs/path_P3", "analytic_inputs/path_4", "analytic_inputs/path_5",
      "analytic_inputs/path_6", "analytic_inputs/path_7", "analytic_inputs/path_8", "analytic_inputs/path_9",
-     "analytic_inputs/path_P11", "analytic_inputs/path_12", "analytic_inputs/path_13", "analytic_inputs/path_14",
+     "analytic_inputs/path_P11", "analytic_inputs/path_P12", "analytic_inputs/path_13", "analytic_inputs/path_14",
      "analytic_inputs/path_15", "analytic_inputs/path_16", "analytic_inputs/path_17", "analytic_inputs/path_18"]
 PAPERBOT_COMPARISON_FILES = \
     ["webots_outputs/P2.txt", "webots_outputs/P3.txt", "webots_outputs/P4.txt", "webots_outputs/P5.txt", "webots_outputs/P6.txt",
      "webots_outputs/P7.txt", "webots_outputs/P8.txt", "webots_outputs/P9.txt", "webots_outputs/P11.txt", "webots_outputs/P12.txt",
      "webots_outputs/P13.txt", "webots_outputs/P14.txt", "webots_outputs/P15.txt", "webots_outputs/P16.txt", "webots_outputs/P17.txt",
      "webots_outputs/P18.txt"]
-PAPER_PLOT_NAMES = \
+PAPERBOT_PLOT_NAMES = \
     ["Paperbot2", "Paperbot3", "Paperbot4", "Paperbot5", "Paperbot6", "Paperbot7", "Paperbot8", "Paperbot9", "Paperbot11",
-     "Paperbot12" "Paperbot13", "Paperbot14", "Paperbot15", "Paperbot16", "Paperbot17", "Paperbot17", "Paperbot18"]
+     "Paperbot12", "Paperbot13", "Paperbot14", "Paperbot15", "Paperbot16", "Paperbot17", "Paperbot17", "Paperbot18"]
 
 SEGWAY_INPUT_FILES = \
     ["analytic_inputs/path_S2", "analytic_inputs/path_S3", "analytic_inputs/path_4", "analytic_inputs/path_5",
      "analytic_inputs/path_6", "analytic_inputs/path_7", "analytic_inputs/path_8", "analytic_inputs/path_9",
-     "analytic_inputs/path_S11", "analytic_inputs/path_12", "analytic_inputs/path_13", "analytic_inputs/path_14",
+     "analytic_inputs/path_S11", "analytic_inputs/path_S12", "analytic_inputs/path_13", "analytic_inputs/path_14",
      "analytic_inputs/path_15", "analytic_inputs/path_16", "analytic_inputs/path_17", "analytic_inputs/path_18"]
 SEGWAY_COMPARISON_FILES = \
     ["webots_outputs/S2.txt", "webots_outputs/S3.txt", "webots_outputs/S4.txt", "webots_outputs/S5.txt", "webots_outputs/S6.txt",
@@ -33,7 +33,7 @@ SEGWAY_COMPARISON_FILES = \
      "webots_outputs/S18.txt"]
 SEGWAY_PLOT_NAMES = \
     ["Segway2", "Segway3", "Segway4", "Segway5", "Segway6", "Segway7", "Segway8", "Segway9", "Segway11",
-     "Segway12" "Segway13", "Segway14", "Segway15", "Segway16", "Segway17", "Segway17", "Segway18"]
+     "Segway12", "Segway13", "Segway14", "Segway15", "Segway16", "Segway17", "Segway17", "Segway18"]
 
 PARAMETER_FILE = "PaperbotParameters.yml"
 OUTPUT_FILE = "Output_Analytical.csv"
@@ -85,14 +85,12 @@ def loop(robot, input_file, comparison_file, plot_name):
             blitRotate(screen, surf, (x, y), (l // 2, w // 2), -angle)
             pygame.display.update() """
 
-        """
         output_matrix = time
         output_matrix = np.column_stack((output_matrix, lidar))
         output_matrix = np.column_stack((output_matrix, gyro))
         output_matrix = np.column_stack((output_matrix, compass))
         output_matrix = np.column_stack((output_matrix, position))
         np.savetxt(OUTPUT_FILE, output_matrix, delimiter=' ', fmt='%.4f')
-        """
 
         plot(OUTPUT_FILE, comparison_file, plot_name)
 
@@ -122,13 +120,8 @@ def blitRotate(surf, image, pos, originPos, angle):
 
 
 def main():
-    """
-    Main Loop for the simulation.
-    inputFile will be a csv file seperated by spaces where each line will have two integers
-    between 0 and 255. These will represent the 2 inputs
-    """
-    # load parameters
-    with open(PARAMETER_FILE) as pFile:
+    """""
+    with open("PaperbotParameters.yml") as pFile:
         P = yaml.load(pFile, Loader=yaml.FullLoader)
 
         init_state = [P["startingX"], P["startingY"], np.radians(P['startingAngle'])]
@@ -136,10 +129,18 @@ def main():
                       P['maxrpm'], P['lstddev'], P['astddev'], P['mstddev'])
 
         for i in range(len(PAPERBOT_INPUT_FILES)):
-            loop(robot, PAPERBOT_INPUT_FILES[i], PAPERBOT_COMPARISON_FILES[i], PAPER_PLOT_NAMES[i])
-            
+            loop(robot, PAPERBOT_INPUT_FILES[i], PAPERBOT_COMPARISON_FILES[i], PAPERBOT_PLOT_NAMES[i])
+    """
+    with open("SegwayParameters.yml") as pFile:
+        P = yaml.load(pFile, Loader=yaml.FullLoader)
+
+        init_state = [P["startingX"], P["startingY"], np.radians(P['startingAngle'])]
+        robot = Agent(init_state, P['w'], P['l'], P['d'], P['roomWidth'], P['roomHeight'],
+                      P['maxrpm'], P['lstddev'], P['astddev'], P['mstddev'])
+
         for i in range(len(SEGWAY_INPUT_FILES)):
-            loop(robot, SEGWAY_INPUT_FILES[i], SEGWAY_COMPARISON_FILES[i], PAPER_PLOT_NAMES[i])
+            loop(robot, SEGWAY_INPUT_FILES[i], SEGWAY_COMPARISON_FILES[i], SEGWAY_PLOT_NAMES[i])
+
 
 
 if __name__ == "__main__":
