@@ -85,8 +85,10 @@ class Agent:
 
         # u[0] = self.PWM_to_RPM(float(PWM_signal[0]) + np.random.normal(0,self.PWM_std[0])) + np.random.normal(0,self.Wheel_std[0])
         # u[1] = self.PWM_to_RPM(float(PWM_signal[1]) + np.random.normal(0,self.PWM_std[1])) + np.random.normal(0,self.Wheel_std[1])
-        self.wl = self.DPS_RadS(float(PWM_signal[0])) +  np.random.normal(0,self.Wheel_std[0])
-        self.wr = self.DPS_RadS(float(PWM_signal[1])) + np.random.normal(0,self.Wheel_std[1])
+        # self.wl = self.DPS_RadS(float(PWM_signal[0])) +  np.random.normal(0,self.Wheel_std[0])
+        # self.wr = self.DPS_RadS(float(PWM_signal[1])) + np.random.normal(0,self.Wheel_std[1])
+        self.wl = float(PWM_signal[0])
+        self.wr = float(PWM_signal[1])
 
 
         # self.wl = self.MAXRPM * (np.pi / 30) * (u[0] / 100)  # + np.random.normal(0, self.PWM_std[0])
