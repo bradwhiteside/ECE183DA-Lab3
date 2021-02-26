@@ -240,7 +240,7 @@ def path_16(time):
     elif time < 12000:
         return -3, -2
     else:
-        return -3, -1
+        return -1, -3
 
 def path_17(time):
     if time < 4000:
