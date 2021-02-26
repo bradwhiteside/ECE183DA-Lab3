@@ -5,13 +5,13 @@ def L2_norm(a, b):
     return math.sqrt(a**2 + b**2)
 
 def get_distance(x, y, W, L, theta):
-    if (theta % 360 == 0):
+    if (theta % 2*np.pi == 0):
         return W-x
-    elif (theta % 360== 90):
+    elif (theta % 2*np.pi == 1/2*np.pi):
         return y
-    elif (theta % 360 == 180):
+    elif (theta % 2*np.pi == np.pi):
         return x
-    elif (theta % 360 == 270):
+    elif (theta % 2*np.pi == 3/2*np.pi):
         return L-y
 
     t = np.radians(theta)

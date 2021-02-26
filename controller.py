@@ -1,10 +1,7 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import csv
 import yaml
 import pygame
-from pygame.locals import *
-import time
 from robot import Agent
 
 INPUT_FILE = "Inputs/Segway3.csv"
@@ -23,8 +20,6 @@ def loop(robot, init_state):
     xOffset = robot.S[0] - (l // 2)
     yOffset = robot.S[1] - (w // 2)
     START = (robot.S[0], robot.S[1], robot.S[2])
-
-    states = list()
 
     pygame.init()
     screen = pygame.display.set_mode((robot.room_width, robot.room_length))
@@ -70,54 +65,16 @@ def loop(robot, init_state):
             blitRotate(screen, surf, (x, y), (l // 2, w // 2), -angle)
             pygame.display.update()
 
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        plt.plot(states[:, 0], states[:, 1])
-        plt.xlabel('x mm')
-        plt.ylabel('y mm')
-        plt.title(INPUT_FILE[7:-4] + "_Simulation")
-        plt.grid()
-        ax.set_aspect('equal', adjustable='box')
+            # convert radians to degrees
+            states[:, 2] = np.degrees(states[:, 2])
+            output_matrix = states
+            output_matrix = np.column_stack((output_matrix, displacement))
+            output_matrix = np.column_stack((output_matrix, angular_displacement))
+            output_matrix = np.column_stack((output_matrix, angular_velocity))
+            output_matrix = np.column_stack((output_matrix, wheel_angular_velocity))
+            np.savetxt(OUTPUT_FILE, output_matrix, delimiter=',', fmt='%.4f')
+            # x, y, theta, x_disp, y_disp, theta_disp, omega, left_wheel_omega, right_wheel_omega
 
-        fig, axs = plt.subplots(2, 2)
-        axs[0, 0].plot(time, displacement[:, 0], label="x")
-        axs[0, 0].plot(time, displacement[:, 1], label="y")
-        axs[0, 0].set_xlabel('time')
-        axs[0, 0].set_ylabel('mm')
-        axs[0, 0].set_title(INPUT_FILE[7:-4] + "_Displacement")
-        axs[0, 0].grid()
-
-        axs[0, 1].plot(time, np.degrees(angular_displacement))
-        axs[0, 1].set_xlabel('time')
-        axs[0, 1].set_ylabel('degrees')
-        axs[0, 1].set_title(INPUT_FILE[7:-4] + "_Angular_Displacement")
-        axs[0, 1].grid()
-
-        axs[1, 0].plot(time, np.degrees(angular_velocity))
-        axs[1, 0].set_xlabel('time')
-        axs[1, 0].set_ylabel('degrees/sec')
-        axs[1, 0].set_title(INPUT_FILE[7:-4] + "_Angular_Velocity")
-        axs[1, 0].grid()
-
-        axs[1, 1].plot(time, np.degrees(wheel_angular_velocity[:, 0]), label="left")
-        axs[1, 1].plot(time, np.degrees(wheel_angular_velocity[:, 1]), label="right")
-        axs[1, 1].set_xlabel('time')
-        axs[1, 1].set_ylabel('degrees/sec')
-        axs[1, 1].set_title(INPUT_FILE[7:-4] + "_Wheel_Angular_Displacement")
-        axs[1, 1].grid()
-
-        fig.subplots_adjust(hspace=0.35)
-        plt.show()
-
-        # convert radians to degrees
-        states[:, 2] = np.degrees(states[:, 2])
-        output_matrix = states
-        output_matrix = np.column_stack((output_matrix, displacement))
-        output_matrix = np.column_stack((output_matrix, angular_displacement))
-        output_matrix = np.column_stack((output_matrix, angular_velocity))
-        output_matrix = np.column_stack((output_matrix, wheel_angular_velocity))
-        np.savetxt(OUTPUT_FILE, output_matrix, delimiter=',', fmt='%.4f')
-        # x, y, theta, x_disp, y_disp, theta_disp, omega, left_wheel_omega, right_wheel_omega
 
 
 # adjust coords so the surface rotates about its center
