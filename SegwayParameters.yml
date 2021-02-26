@@ -5,7 +5,7 @@ l: 682
 w: 530
 startingX: 5000
 startingY: 5000
-startingAngle: 0
+startingAngle: 90
 # in degrees ^
 maxrpm: 130
 lstddev: 0.05

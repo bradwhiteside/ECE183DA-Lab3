@@ -7,17 +7,26 @@ import time
 from robot import Agent
 from plots import plot
 
-#INPUT_FILE = "Inputs/Segway3.csv"
-INPUT_FILE = "analytic_inputs/path_4"
-COMPARISON_FILE = "all_inputs/S4.txt"
-PLOT_NAME = "Segway4"
-PARAMETER_FILE = "SegwayParameters.yml"
+PAPERBOT_INPUT_FILES = \
+    ["analytic_inputs/path_P2", "analytic_inputs/path_P3", "analytic_inputs/path_4", "analytic_inputs/path_5",
+     "analytic_inputs/path_6", "analytic_inputs/path_7", "analytic_inputs/path_8", "analytic_inputs/path_9",
+     "analytic_inputs/path_P11", "analytic_inputs/path_12" "analytic_inputs/path_13","analytic_inputs/path_14",
+     "analytic_inputs/path_15", "analytic_inputs/path_16", "analytic_inputs/path_17", "analytic_inputs/path_18"]
+PAPERBOT_COMPARISON_FILES = \
+    ["all_inputs/P2.txt", "all_inputs/P3.txt", "all_inputs/P4.txt", "all_inputs/P5.txt", "all_inputs/P6.txt",
+     "all_inputs/P7.txt", "all_inputs/P8.txt", "all_inputs/P9.txt", "all_inputs/P11.txt", "all_inputs/P12.txt",
+     "all_inputs/P13.txt", "all_inputs/P14.txt", "all_inputs/P15.txt", "all_inputs/P16.txt", "all_inputs/P17.txt",
+     "all_inputs/P18.txt"]
+PAPER_PLOT_NAMES = \
+    ["Paperbot2", "Paperbot3", "Paperbot4", "Paperbot5", "Paperbot6", "Paperbot7", "Paperbot8", "Paperbot9", "Paperbot11",
+     "Paperbot12" "Paperbot13", "Paperbot14", "Paperbot15", "Paperbot16", "Paperbot17", "Paperbot17", "Paperbot18"]
+PARAMETER_FILE = "PaperbotParameters.yml"
 OUTPUT_FILE = "Output_Analytical.csv"
 
 # $ pip install pygame
 # code for pygame taken from this tutorial:
 # https://coderslegacy.com/python/python-pygame-tutorial/
-def loop(robot):
+def loop(robot, input_file, comparison_file, plot_name):
     outputFile = open(OUTPUT_FILE, "w")
     """column_headers = np.array(['time', 'lidar_F', 'lidar_R',
                                'gyro', 'compass_x', 'compass_y'])
@@ -30,7 +39,7 @@ def loop(robot):
 
     #pygame.init()
     #screen = pygame.display.set_mode((robot.room_width, robot.room_length))
-    with open(INPUT_FILE) as csvFile:
+    with open(input_file) as csvFile:
         csvReader = csv.reader(csvFile, delimiter=',')
         inputs = list(csvReader)
 
@@ -68,7 +77,7 @@ def loop(robot):
         output_matrix = np.column_stack((output_matrix, position))
         np.savetxt(OUTPUT_FILE, output_matrix, delimiter=' ', fmt='%.4f')
 
-        plot(OUTPUT_FILE, COMPARISON_FILE, PLOT_NAME)
+        plot(OUTPUT_FILE, comparison_file, plot_name)
 
 # adjust coords so the surface rotates about its center
 # https://stackoverflow.com/questions/4183208/how-do-i-rotate-an-image-around-its-center-using-pygame
@@ -108,7 +117,9 @@ def main():
         init_state = [P["startingX"], P["startingY"], np.radians(P['startingAngle'])]
         robot = Agent(init_state, P['w'], P['l'], P['d'], P['roomWidth'], P['roomHeight'],
                       P['maxrpm'], P['lstddev'], P['astddev'], P['mstddev'])
-        loop(robot)
+
+        for i in range(len(PAPERBOT_INPUT_FILES)):
+            loop(robot, PAPERBOT_INPUT_FILES[i], PAPERBOT_COMPARISON_FILES[i], PAPER_PLOT_NAMES[i])
 
 
 if __name__ == "__main__":

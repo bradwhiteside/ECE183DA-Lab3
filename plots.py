@@ -98,5 +98,6 @@ def plot(INPUT_FILE_1, INPUT_FILE_2, PLOT_NAME):
     fig.subplots_adjust(hspace=0.55, wspace=0.3, top=0.95)
     fig.set_size_inches(12, 9)
     fig.canvas.set_window_title(PLOT_NAME)
+    fig.suptitle(PLOT_NAME, y=0.995)
     plt.savefig("saved_plots/" + PLOT_NAME + ".png")
     plt.show()
