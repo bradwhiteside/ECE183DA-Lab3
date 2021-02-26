@@ -24,8 +24,8 @@ def loop(robot):
     xOffset = robot.S[0] - (l // 2)
     yOffset = robot.S[1] - (w // 2)
 
-    pygame.init()
-    screen = pygame.display.set_mode((robot.room_width, robot.room_length))
+    #pygame.init()
+    #screen = pygame.display.set_mode((robot.room_width, robot.room_length))
     with open(INPUT_FILE) as csvFile:
         csvReader = csv.reader(csvFile, delimiter=',')
         inputs = list(csvReader)
@@ -34,15 +34,18 @@ def loop(robot):
         lidar = np.zeros((len(time), 2))
         gyro = np.zeros((len(time), 1))
         compass = np.zeros((len(time), 2))
-        position = np.zeros((len(time), 2))
+        position = np.zeros((len(time), 3))
 
         for i in range(len(time)):
-            robot.state_update(inputs[i])
+            try:
+                robot.state_update(inputs[i])
+            except IndexError:
+                break
             data = robot.get_observation()
-            lidar[i] = data[0:2]
+            lidar[i] = np.array(data[0:2])
             gyro[i] = data[2]
-            compass[i] = data[3:]
-            position[i] = robot.S
+            compass[i] = np.array(data[3:])
+            position[i] = robot.S.reshape((3,))
 
             """# draw
             screen.fill((0, 0, 0))

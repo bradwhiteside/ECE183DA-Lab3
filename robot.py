@@ -14,27 +14,26 @@ def get_distance(x, y, W, L, theta):
     elif (theta % 2*np.pi == 3/2*np.pi):
         return L-y
 
-    t = np.radians(theta)
     if (theta < 90):
         b1 = y
-        a1 = b1 * math.cot(t)
+        a1 = b1 * (1/math.tan(theta))
         a2 = W-x
-        b2 = a2 * math.tan(t)
+        b2 = a2 * math.tan(theta)
     elif (theta < 180):
         b1 = y
-        a1 = b1 * math.cot(t)
+        a1 = b1 * (1/math.tan(theta))
         a2 = x
-        b2 = a2 * math.tan(t)
+        b2 = a2 * math.tan(theta)
     elif (theta < 270):
         a1 = x
-        b1 = a1 * math.tan(t)
+        b1 = a1 * math.tan(theta)
         b2 = L-y
-        a2 = b2 * math.cot(t)
+        a2 = b2 * (1/math.tan(theta))
     else:
         a1 = W-x
-        b1 = a1 * math.tan(t)
+        b1 = a1 * math.tan(theta)
         b2 = L-y
-        a2 = b2 * math.cot(t)
+        a2 = b2 * (1/math.tan(theta))
 
     return min(L2_norm(a1, b1), L2_norm(a2, b2))
 
@@ -42,7 +41,6 @@ class Agent:
     def __init__(self, init_state=[0, 0, 0], w=530, l=682, d=502, rw=10000, rl=10000, maxrpm=130, lstddev=0.03, astddev=8,
                  mstddev=1):
         self.S = np.reshape(np.array(init_state), (3, 1))
-        print(self.S)
         self.width = w
         self.length = l
         self.diameter = d
@@ -95,7 +93,6 @@ class Agent:
         # v = u[0]
         # ommega = u[1]
         u = np.vstack((self.wl, self.wr))
-        print("u is:", u)
 
         B = np.array([[np.cos(self.S[2, 0]), 0],
                       [np.sin(self.S[2, 0]), 0],
@@ -116,22 +113,22 @@ class Agent:
         right_lidar = \
             get_distance(self.S[0], self.S[1], self.room_width,
                          self.room_length, self.S[2] - 90)
-        return front_lidar, right_lidar
+        return np.random.normal(front_lidar, self.lidarStdDev), np.random.normal(right_lidar, self.lidarStdDev)
 
     def get_IMU_velocity(self):
         omega = ((self.wl - self.wr) / self.width) * (self.diameter / 2)
-        return omega + np.random.normal(0, self.accelerometerStdDev)
+        return np.random.normal(omega, self.accelerometerStdDev)
 
     def get_IMU_position(self):
-        return (math.cos(self.S[2, 0]) + np.random.normal(0, self.magnetometerStdDev), \
-                math.sin(self.S[2, 0]) + np.random.normal(0, self.magnetometerStdDev))
+        return np.random.normal(math.cos(self.S[2, 0]), self.magnetometerStdDev), \
+            np.random.normal(math.sin(self.S[2, 0]), self.magnetometerStdDev)
 
     def get_observation(self):
         # do the sensor output readings here
         L = self.get_lidar_readings()
         velocity = self.get_IMU_velocity()
         pos = self.get_IMU_position()
-        return L, velocity, pos
+        return L[0], L[1], velocity, pos[0], pos[1]
 
 
 
