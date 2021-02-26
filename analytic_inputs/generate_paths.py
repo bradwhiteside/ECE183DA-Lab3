@@ -261,7 +261,7 @@ def create_input_file_from_func(file_name, func, time_step, max_time):
     inputs = np.zeros((time.shape[0], 2))
     for i in range(time.shape[0]):
         values = func(time[i])
-        inputs[i] = [-10*values[0],-10*values[1]] # scale paths to account for webots vs python differences
+        inputs[i] = [values[0],values[1]] # scale paths to account for webots vs python differences
 
     np.savetxt(file_name, inputs, delimiter=',', fmt='%.4f')
 

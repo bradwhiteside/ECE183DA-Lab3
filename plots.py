@@ -10,8 +10,8 @@ def plot(INPUT_FILE_1, INPUT_FILE_2):
     lidar1 = data1[:, 1:3]  # next two columns
     gyro1 = data1[:, 3]
     compass1 = data1[:, 4:6]
-    pos1 = data2[:, 6:8]
-    theta1 = data2[:, 8]
+    pos1 = data1[:, 6:8]
+    theta1 = data1[:, 8]
 
     time2 = data2[:, 0]  # first column
     lidar2 = data2[:, 1:3]  # next two columns
