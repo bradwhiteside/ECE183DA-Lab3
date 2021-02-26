@@ -2,58 +2,42 @@ import numpy as np
 import csv
 import yaml
 import pygame
+import time
 from robot import Agent
+from plots import plot
 
 INPUT_FILE = "Inputs/Segway3.csv"
 PARAMETER_FILE = "SegwayParameters.yml"
-OUTPUT_FILE = "output_python.csv"
+OUTPUT_FILE = "Output_Analytical.csv"
 ENABLE_RENDERING = False
-
 
 # $ pip install pygame
 # code for pygame taken from this tutorial:
 # https://coderslegacy.com/python/python-pygame-tutorial/
-def loop(robot, init_state):
+def loop(robot):
     outputFile = open(OUTPUT_FILE, "w")
+    column_headers = np.array(['time', 'lidar_F', 'lidar_R',
+                               'gyro', 'compass_x', 'compass_y'])
+    np.savetxt(OUTPUT_FILE, column_headers)
+
     w = robot.width
     l = robot.length
     xOffset = robot.S[0] - (l // 2)
     yOffset = robot.S[1] - (w // 2)
-    START = (robot.S[0], robot.S[1], robot.S[2])
 
     pygame.init()
     screen = pygame.display.set_mode((robot.room_width, robot.room_length))
     with open(INPUT_FILE) as csvFile:
         csvReader = csv.reader(csvFile, delimiter=',')
         inputs = list(csvReader)
-        STATE_SIZE = 3
 
-        time = np.linspace(0, 5, num=501)
-        states = np.zeros((len(inputs), STATE_SIZE))
-        displacement = np.zeros((len(inputs), 2))
-        angular_displacement = np.zeros((len(inputs), 1))
-        angular_velocity = np.zeros((len(inputs), 1))
-        wheel_angular_velocity = np.zeros((len(inputs), 2))
+        time = np.arange(0, 20.005, 0.005)
+        lidar = np.zeros((len(time), 2))
+        gyro = np.zeros((len(time), 1))
+        compass = np.zeros((len(time), 2))
 
-        for i in range(len(inputs)):
-            print(inputs[i])
+        for i in range(len(time)):
             robot.state_update(inputs[i])
-            states[i, :] = robot.S.T
-            displacement[i, :] = np.array((robot.S[0] - START[0], robot.S[1] - START[1])).T
-            angular_displacement[i, :] = robot.S[2] - START[2]
-            angular_velocity[i, :] = robot.get_IMU_velocity()
-            wheel_angular_velocity[i, :] = np.array((robot.wl, robot.wr)).T
-
-            time.sleep(0.005)
-
-            # get output
-            output = robot.get_observation()
-            outputText = str(round(output[0][0], 3))[:-1] + " "
-            outputText += str(round(output[0][1], 3))[:-1] + " "
-            outputText += str(round(output[1], 3))[:-1] + " "
-            outputText += str(round(output[2][0], 3))[:-1] + " "
-            outputText += str(round(output[2][1], 3)) + "\n"
-            outputFile.write(outputText)
 
             # draw
             screen.fill((0, 0, 0))
@@ -65,17 +49,13 @@ def loop(robot, init_state):
             blitRotate(screen, surf, (x, y), (l // 2, w // 2), -angle)
             pygame.display.update()
 
-            # convert radians to degrees
-            states[:, 2] = np.degrees(states[:, 2])
-            output_matrix = states
-            output_matrix = np.column_stack((output_matrix, displacement))
-            output_matrix = np.column_stack((output_matrix, angular_displacement))
-            output_matrix = np.column_stack((output_matrix, angular_velocity))
-            output_matrix = np.column_stack((output_matrix, wheel_angular_velocity))
-            np.savetxt(OUTPUT_FILE, output_matrix, delimiter=',', fmt='%.4f')
-            # x, y, theta, x_disp, y_disp, theta_disp, omega, left_wheel_omega, right_wheel_omega
+        output_matrix = time
+        output_matrix = np.column_stack((output_matrix, lidar))
+        output_matrix = np.column_stack((output_matrix, gyro))
+        output_matrix = np.column_stack((output_matrix, compass))
+        np.savetxt(OUTPUT_FILE, output_matrix, delimiter=' ', fmt='%.4f')
 
-
+        plot(OUTPUT_FILE)
 
 # adjust coords so the surface rotates about its center
 # https://stackoverflow.com/questions/4183208/how-do-i-rotate-an-image-around-its-center-using-pygame
@@ -115,7 +95,7 @@ def main():
         init_state = [P["startingX"], P["startingY"], np.radians(P['startingAngle'])]
         robot = Agent(init_state, P['w'], P['l'], P['d'], P['roomWidth'], P['roomHeight'],
                       P['maxrpm'], P['lstddev'], P['astddev'], P['mstddev'])
-        loop(robot, init_state)
+        loop(robot)
 
 
 if __name__ == "__main__":
