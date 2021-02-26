@@ -9,16 +9,15 @@ from plots import plot
 INPUT_FILE = "Inputs/Segway3.csv"
 PARAMETER_FILE = "SegwayParameters.yml"
 OUTPUT_FILE = "Output_Analytical.csv"
-ENABLE_RENDERING = False
 
 # $ pip install pygame
 # code for pygame taken from this tutorial:
 # https://coderslegacy.com/python/python-pygame-tutorial/
 def loop(robot):
     outputFile = open(OUTPUT_FILE, "w")
-    column_headers = np.array(['time', 'lidar_F', 'lidar_R',
+    """column_headers = np.array(['time', 'lidar_F', 'lidar_R',
                                'gyro', 'compass_x', 'compass_y'])
-    np.savetxt(OUTPUT_FILE, column_headers)
+    np.savetxt(OUTPUT_FILE, column_headers)"""
 
     w = robot.width
     l = robot.length
@@ -39,7 +38,7 @@ def loop(robot):
         for i in range(len(time)):
             robot.state_update(inputs[i])
 
-            # draw
+            """# draw
             screen.fill((0, 0, 0))
             angle = robot.S[2] * 180 / np.pi
             surf = pygame.Surface((l, w)).convert_alpha()
@@ -47,7 +46,7 @@ def loop(robot):
             x = xOffset + robot.S[0]
             y = yOffset + robot.S[1]
             blitRotate(screen, surf, (x, y), (l // 2, w // 2), -angle)
-            pygame.display.update()
+            pygame.display.update() """
 
         output_matrix = time
         output_matrix = np.column_stack((output_matrix, lidar))
