@@ -12,7 +12,7 @@ import numpy as np
 #         return -2, -8
 
 def path_spin(time):
-    if time < 10:
+    if time < 10000:
         return 1, -1
     else:
         return -1, -1
@@ -21,237 +21,237 @@ def path_turn(time):
     return -2, -1
 
 def path_S1_ABCD(time):
-    if time < 5:
+    if time < 5000:
         return -6, -1
-    elif time < 10:
+    elif time < 10000:
         return -8, 4
-    elif time < 15:
+    elif time < 15000:
         return -6, -2
     else:
         return -2, -8
 
 def path_S2(time):
-    if time < 4:
+    if time < 4000:
         return -1, -8
-    elif time < 8:
+    elif time < 8000:
         return -4, -4
-    elif time < 12:
+    elif time < 12000:
         return 6, -6
-    elif time < 16:
+    elif time < 16000:
         return -6, -6
     else:
         return -6, -1
 
 def path_S3(time):
-    if time < 4:
+    if time < 4000:
         return -8, -8
-    elif time < 8:
+    elif time < 8000:
         return 8, -8
-    elif time < 12:
+    elif time < 12000:
         return -4, -4
-    elif time < 16:
+    elif time < 16000:
         return -1, -6
     else:
         return -1, -4
 
 def path_S10_ABCD(time):
-    if time < 4:
+    if time < 4000:
         return -2, -2
-    elif time < 8:
+    elif time < 8000:
         return 2, -2
-    elif time < 12:
+    elif time < 12000:
         return -3, -3
-    elif time < 16:
+    elif time < 16000:
         return -1, -4
     else:
         return -1, -2
 
 def path_S11(time):
-    if time < 4:
+    if time < 4000:
         return -1, -2
-    elif time < 8:
+    elif time < 8000:
         return 1, -2
-    elif time < 12:
+    elif time < 12000:
         return -4, -1
-    elif time < 16:
+    elif time < 16000:
         return -1, -4
     else:
         return -1, -2
 
 def path_S12(time):
-    if time < 4:
+    if time < 4000:
         return -6, -1
-    elif time < 8:
+    elif time < 8000:
         return 4, -4
-    elif time < 12:
+    elif time < 12000:
         return -1, -3
-    elif time < 16:
+    elif time < 16000:
         return -1, -2
     else:
         return -2, -2
 
 def path_P1_ABCD(time):
-    if time < 4:
+    if time < 4000:
         return -2, -2
-    elif time < 8:
+    elif time < 8000:
         return 2, -2
-    elif time < 12:
+    elif time < 12000:
         return -3, -3
-    elif time < 16:
+    elif time < 16000:
         return -1, -4
     else:
         return -1, -3
 
 def path_P2(time):
-    if time < 4:
+    if time < 4000:
         return -1, -4
-    elif time < 8:
+    elif time < 8000:
         return -2, -2
-    elif time < 12:
+    elif time < 12000:
         return 3, -3
-    elif time < 16:
+    elif time < 16000:
         return -1, -2
     else:
         return -3, -1
 
 def path_P3(time):
-    if time < 4:
+    if time < 4000:
         return -1, -2
-    elif time < 8:
+    elif time < 8000:
         return -1, -4
-    elif time < 12:
+    elif time < 12000:
         return -3, -3
-    elif time < 16:
+    elif time < 16000:
         return -4, -1
     else:
         return -2, -1
 
 def path_P10_ABCD(time):
-    if time < 4:
+    if time < 4000:
         return -2, -2
-    elif time < 8:
+    elif time < 8000:
         return 2, -2
-    elif time < 12:
+    elif time < 12000:
         return -3, -3
-    elif time < 16:
+    elif time < 16000:
         return -1, -4
     else:
         return -1, -2
 
 def path_P11(time):
-    if time < 4:
+    if time < 4000:
         return -1, -2
-    elif time < 8:
+    elif time < 8000:
         return 1, -2
-    elif time < 12:
+    elif time < 12000:
         return -4, -1
-    elif time < 16:
+    elif time < 16000:
         return -1, -4
     else:
         return -1, -2
 
 def path_S12(time):
-    if time < 4:
+    if time < 4000:
         return -6, -1
-    elif time < 8:
+    elif time < 8000:
         return 4, -4
-    elif time < 12:
+    elif time < 12000:
         return -1, -3
-    elif time < 16:
+    elif time < 16000:
         return -1, -2
     else:
         return -2, -2
 
 def path_4(time):
-    if time < 10:
+    if time < 10000:
         return 1, 1
     else:
         return -3, 1
 
 def path_5(time):
-    if time < 5:
+    if time < 5000:
         return 1, 2
-    elif time < 10:
+    elif time < 10000:
         return -1, -2
     else:
         return -1, -1
 
 def path_6(time):
-    if time < 5:
+    if time < 5000:
         return 0, 2
-    elif time < 10:
+    elif time < 10000:
         return 2, 0
     else:
         return -1, -1
 
 def path_7(time):
-    if time < 5:
+    if time < 5000:
         return 1, -1
-    elif time < 10:
+    elif time < 10000:
         return 1, 1
-    elif time < 15:
+    elif time < 15000:
         return -5, -1
     else:
         return -1, -5
 
 def path_8(time):
-    if time < 5:
+    if time < 5000:
         return -1, -1
-    elif time < 10:
+    elif time < 10000:
         return 1, 1
-    elif time < 15:
+    elif time < 15000:
         return -2, -2
     else:
         return 2, 2
 
 def path_9(time):
-    if time < 15:
+    if time < 15000:
         return -1, -5
     else:
         return 5, 1
 
 def path_13(time):
-    if time < 5:
+    if time < 5000:
         return 1, 1
-    elif time < 10:
+    elif time < 10000:
         return 2, -2
     else:
         return -1, -1
 
 def path_14(time):
-    if time < 5:
+    if time < 5000:
         return -2, -1
-    elif time < 10:
+    elif time < 10000:
         return 2, 2
     else:
         return -1, -2
 
 def path_15(time):
-    if time < 5:
+    if time < 5000:
         return -2, -2
-    elif time < 10:
+    elif time < 10000:
         return 1, 1
     else:
         return -1, -3
 
 def path_16(time):
-    if time < 8:
+    if time < 8000:
         return 2, 2
-    elif time < 12:
+    elif time < 12000:
         return -5, 2
     else:
         return -1, -5
 
 def path_17(time):
-    if time < 4:
+    if time < 4000:
         return -2, -2
-    elif time < 8:
+    elif time < 8000:
         return 5, 2
     else:
         return -5, -1
 
 def path_18(time):
-    if time < 10:
+    if time < 10000:
         return -1, -5
     else:
         return -5, -1
