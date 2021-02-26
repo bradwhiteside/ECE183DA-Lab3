@@ -150,7 +150,7 @@ def path_P11(time):
     else:
         return -1, -2
 
-def path_S12(time):
+def path_P12(time):
     if time < 4000:
         return -6, -1
     elif time < 8000:
@@ -266,7 +266,7 @@ def create_input_file_from_func(file_name, func, time_step, max_time):
     np.savetxt(file_name, inputs, delimiter=',', fmt='%.4f')
 
 def main():
-    paths = [path_spin, path_turn, path_S1_ABCD, path_S2, path_S3, path_S10_ABCD, path_S11, path_S12, path_P1_ABCD, path_P2, path_P3, path_P10_ABCD, path_P11, path_S12, path_4, path_5, path_6, path_7, path_8, path_9, path_13, path_14, path_15, path_16, path_17, path_18]
+    paths = [path_spin, path_turn, path_S1_ABCD, path_S2, path_S3, path_S10_ABCD, path_S11, path_S12, path_P1_ABCD, path_P2, path_P3, path_P10_ABCD, path_P11, path_P12, path_4, path_5, path_6, path_7, path_8, path_9, path_13, path_14, path_15, path_16, path_17, path_18]
     for func in paths:
         create_input_file_from_func(func.__name__, func, 5, 20000)
 

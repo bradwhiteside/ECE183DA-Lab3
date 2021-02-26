@@ -10,13 +10,13 @@ from plots import plot
 PAPERBOT_INPUT_FILES = \
     ["analytic_inputs/path_P2", "analytic_inputs/path_P3", "analytic_inputs/path_4", "analytic_inputs/path_5",
      "analytic_inputs/path_6", "analytic_inputs/path_7", "analytic_inputs/path_8", "analytic_inputs/path_9",
-     "analytic_inputs/path_P11", "analytic_inputs/path_12" "analytic_inputs/path_13","analytic_inputs/path_14",
+     "analytic_inputs/path_P11", "analytic_inputs/path_12", "analytic_inputs/path_13", "analytic_inputs/path_14",
      "analytic_inputs/path_15", "analytic_inputs/path_16", "analytic_inputs/path_17", "analytic_inputs/path_18"]
 PAPERBOT_COMPARISON_FILES = \
-    ["all_inputs/P2.txt", "all_inputs/P3.txt", "all_inputs/P4.txt", "all_inputs/P5.txt", "all_inputs/P6.txt",
-     "all_inputs/P7.txt", "all_inputs/P8.txt", "all_inputs/P9.txt", "all_inputs/P11.txt", "all_inputs/P12.txt",
-     "all_inputs/P13.txt", "all_inputs/P14.txt", "all_inputs/P15.txt", "all_inputs/P16.txt", "all_inputs/P17.txt",
-     "all_inputs/P18.txt"]
+    ["webots_outputs/P2.txt", "webots_outputs/P3.txt", "webots_outputs/P4.txt", "webots_outputs/P5.txt", "webots_outputs/P6.txt",
+     "webots_outputs/P7.txt", "webots_outputs/P8.txt", "webots_outputs/P9.txt", "webots_outputs/P11.txt", "webots_outputs/P12.txt",
+     "webots_outputs/P13.txt", "webots_outputs/P14.txt", "webots_outputs/P15.txt", "webots_outputs/P16.txt", "webots_outputs/P17.txt",
+     "webots_outputs/P18.txt"]
 PAPER_PLOT_NAMES = \
     ["Paperbot2", "Paperbot3", "Paperbot4", "Paperbot5", "Paperbot6", "Paperbot7", "Paperbot8", "Paperbot9", "Paperbot11",
      "Paperbot12" "Paperbot13", "Paperbot14", "Paperbot15", "Paperbot16", "Paperbot17", "Paperbot17", "Paperbot18"]
