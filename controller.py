@@ -20,6 +20,21 @@ PAPERBOT_COMPARISON_FILES = \
 PAPER_PLOT_NAMES = \
     ["Paperbot2", "Paperbot3", "Paperbot4", "Paperbot5", "Paperbot6", "Paperbot7", "Paperbot8", "Paperbot9", "Paperbot11",
      "Paperbot12" "Paperbot13", "Paperbot14", "Paperbot15", "Paperbot16", "Paperbot17", "Paperbot17", "Paperbot18"]
+
+SEGWAY_INPUT_FILES = \
+    ["analytic_inputs/path_S2", "analytic_inputs/path_S3", "analytic_inputs/path_4", "analytic_inputs/path_5",
+     "analytic_inputs/path_6", "analytic_inputs/path_7", "analytic_inputs/path_8", "analytic_inputs/path_9",
+     "analytic_inputs/path_S11", "analytic_inputs/path_12", "analytic_inputs/path_13", "analytic_inputs/path_14",
+     "analytic_inputs/path_15", "analytic_inputs/path_16", "analytic_inputs/path_17", "analytic_inputs/path_18"]
+SEGWAY_COMPARISON_FILES = \
+    ["webots_outputs/S2.txt", "webots_outputs/S3.txt", "webots_outputs/S4.txt", "webots_outputs/S5.txt", "webots_outputs/S6.txt",
+     "webots_outputs/S7.txt", "webots_outputs/S8.txt", "webots_outputs/S9.txt", "webots_outputs/S11.txt", "webots_outputs/S12.txt",
+     "webots_outputs/S13.txt", "webots_outputs/S14.txt", "webots_outputs/S15.txt", "webots_outputs/S16.txt", "webots_outputs/S17.txt",
+     "webots_outputs/S18.txt"]
+SEGWAY_PLOT_NAMES = \
+    ["Segway2", "Segway3", "Segway4", "Segway5", "Segway6", "Segway7", "Segway8", "Segway9", "Segway11",
+     "Segway12" "Segway13", "Segway14", "Segway15", "Segway16", "Segway17", "Segway17", "Segway18"]
+
 PARAMETER_FILE = "PaperbotParameters.yml"
 OUTPUT_FILE = "Output_Analytical.csv"
 
@@ -70,12 +85,14 @@ def loop(robot, input_file, comparison_file, plot_name):
             blitRotate(screen, surf, (x, y), (l // 2, w // 2), -angle)
             pygame.display.update() """
 
+        """
         output_matrix = time
         output_matrix = np.column_stack((output_matrix, lidar))
         output_matrix = np.column_stack((output_matrix, gyro))
         output_matrix = np.column_stack((output_matrix, compass))
         output_matrix = np.column_stack((output_matrix, position))
         np.savetxt(OUTPUT_FILE, output_matrix, delimiter=' ', fmt='%.4f')
+        """
 
         plot(OUTPUT_FILE, comparison_file, plot_name)
 
@@ -120,6 +137,9 @@ def main():
 
         for i in range(len(PAPERBOT_INPUT_FILES)):
             loop(robot, PAPERBOT_INPUT_FILES[i], PAPERBOT_COMPARISON_FILES[i], PAPER_PLOT_NAMES[i])
+            
+        for i in range(len(SEGWAY_INPUT_FILES)):
+            loop(robot, SEGWAY_INPUT_FILES[i], SEGWAY_COMPARISON_FILES[i], PAPER_PLOT_NAMES[i])
 
 
 if __name__ == "__main__":
