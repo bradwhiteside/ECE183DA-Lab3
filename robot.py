@@ -6,6 +6,37 @@ def L2_norm(a, b):
     return math.sqrt(a**2 + b**2)
 
 def get_distance(x, y, W, L, theta):
+    # if (theta % 2*np.pi == 0):
+    #     return W-x
+    # elif (theta % 2*np.pi == 1/2*np.pi):
+    #     return y
+    # elif (theta % 2*np.pi == np.pi):
+    #     return x
+    # elif (theta % 2*np.pi == -1/2*np.pi):
+    #     return L-y
+
+    # if (theta < -90):
+    #     a1 = x
+    #     b1 = a1 * math.tan(theta)
+    #     b2 = L-y
+    #     a2 = b2 * (1/math.tan(theta))
+    
+    # elif (theta < 90):
+    #     b1 = y
+    #     a1 = b1 * (1/math.tan(theta))
+    #     a2 = W-x
+    #     b2 = a2 * math.tan(theta)
+    # elif (theta < 180):
+    #     b1 = y
+    #     a1 = b1 * (1/math.tan(theta))
+    #     a2 = x
+    #     b2 = a2 * math.tan(theta)
+    # else:
+    #     a1 = W-x
+    #     b1 = a1 * math.tan(theta)
+    #     b2 = L-y
+    #     a2 = b2 * (1/math.tan(theta))
+    # theta = -theta + np.pi
     if (theta % 2*np.pi == 0):
         return W-x
     elif (theta % 2*np.pi == 1/2*np.pi):
@@ -72,6 +103,7 @@ class Agent:
     #Convert the angle to -pi tp pi range
     def pi_2_pi(self, a):
         return (a + np.pi) % (2 * np.pi) - np.pi
+        
     
 
     def state_update(self, PWM_signal):
@@ -115,7 +147,7 @@ class Agent:
                          self.room_length, self.S[2])
         right_lidar = \
             get_distance(self.S[0], self.S[1], self.room_width,
-                         self.room_length, self.S[2] - 90)
+                         self.room_length, self.S[2] + np.pi/2)
         return np.random.normal(front_lidar, abs(front_lidar * self.lidarStdDev)),\
                np.random.normal(right_lidar, abs(right_lidar * self.lidarStdDev))
 

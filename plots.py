@@ -2,6 +2,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+def pi_2_pi(a):
+        return (a + np.pi) % (2 * np.pi) - np.pi
+
 def plot(INPUT_FILE_1, INPUT_FILE_2, PLOT_NAME):
     data1 = np.loadtxt(INPUT_FILE_1, skiprows=0)  # set skiprows to 1 if title is included
     data2 = np.loadtxt(INPUT_FILE_2, skiprows=0)  # ^^^
@@ -38,14 +41,15 @@ def plot(INPUT_FILE_1, INPUT_FILE_2, PLOT_NAME):
     axs[0, 1].grid()
     axs[0, 1].legend()
 
-    axs[1, 0].plot(time, compass1[:, 0], label="python")
-    axs[1, 0].plot(time, compass2[:, 0], label="webots")
+   
+
+    axs[1, 0].plot(time,   compass1[:, 0], label="python")
+    axs[1, 0].plot(time,  compass2[:, 0] , label="webots")
     axs[1, 0].set_xlabel('time')
     axs[1, 0].set_ylabel('compass readings [cos(theta)]')
     axs[1, 0].set_title("Compass_X")
     axs[1, 0].grid()
     axs[1, 0].legend()
-
     axs[1, 1].plot(time, compass1[:, 1], label="python")
     axs[1, 1].plot(time, compass2[:, 1], label="webots")
     axs[1, 1].set_xlabel('time')
@@ -62,13 +66,15 @@ def plot(INPUT_FILE_1, INPUT_FILE_2, PLOT_NAME):
     axs[2, 0].grid()
     axs[2, 0].legend()
 
+  
     axs[2, 1].plot(time, np.degrees(theta1), label="python")
-    axs[2, 1].plot(time, np.degrees(theta2), label="webots")
+    axs[2, 1].plot(time, np.degrees(pi_2_pi(theta2)), label="webots")
     axs[2, 1].set_xlabel('time')
     axs[2, 1].set_ylabel('theta (degrees)')
     axs[2, 1].set_title("Theta")
     axs[2, 1].grid()
     axs[2, 1].legend()
+
 
     axs[3, 0].plot(time, pos1[:, 0] / 1000, label="python")
     axs[3, 0].plot(time, pos2[:, 0], label="webots")
@@ -77,16 +83,16 @@ def plot(INPUT_FILE_1, INPUT_FILE_2, PLOT_NAME):
     axs[3, 0].set_title("X Position")
     axs[3, 0].grid()
     axs[3, 0].legend()
-    """
-    axs[3, 1].plot(time, pos1[:, 1] / 1000, label="python")
-    axs[3, 1].plot(time, pos2[:, 1], label="webots")
-    axs[3, 1].set_xlabel('time')
-    axs[3, 1].set_ylabel('y position (meters)')
-    axs[3, 1].set_title("Y Position")
-    axs[3, 1].grid()
-    axs[3, 1].legend()
+    
+    # axs[3, 1].plot(time, pos1[:, 1] / 1000, label="python")
+    # axs[3, 1].plot(time, pos2[:, 1], label="webots")
+    # axs[3, 1].set_xlabel('time')
+    # axs[3, 1].set_ylabel('y position (meters)')
+    # axs[3, 1].set_title("Y Position")
+    # axs[3, 1].grid()
+    # axs[3, 1].legend()
 
-    """
+  
     axs[3, 1].plot(pos1[:, 0] / 1000, pos1[:, 1] / 1000, label="python")
     axs[3, 1].plot(pos2[:, 0], pos2[:, 1], label="webots")
     axs[3, 1].set_xlabel('x position (meters)')

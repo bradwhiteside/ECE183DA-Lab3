@@ -32,27 +32,27 @@ def path_S1_ABCD(time):
 
 def path_S2(time):
     if time < 4000:
-        return -1, -8
+        return -1, -8. #L R
     elif time < 8000:
-        return -4, -4
+        return -2, -2
     elif time < 12000:
-        return 6, -6
+        return 3, -3
     elif time < 16000:
-        return -6, -6
+        return -3, -3
     else:
         return -6, -1
 
 def path_S3(time):
     if time < 4000:
-        return -8, -8
-    elif time < 8000:
-        return 8, -8
-    elif time < 12000:
         return -4, -4
+    elif time < 8000:
+        return 4, -4
+    elif time < 12000:
+        return -2, -2
     elif time < 16000:
-        return -1, -6
+        return -1, -3
     else:
-        return -1, -4
+        return -1, -2
 
 def path_S10_ABCD(time):
     if time < 4000:
