@@ -60,4 +60,12 @@
 
 ### saved_plots
 * contains png images of all the plots created by *plots.py*
-    
+
+### lab3_controller.py and my_controller2.py
+* two different implementations by different teammates of a python Webots controller
+* NOT used to create the files in webots_outputs/
+* Only included for use in the future
+
+### lab3_controller.m
+* Matlab webots controller
+* Used to create the files in webots_outputs/
