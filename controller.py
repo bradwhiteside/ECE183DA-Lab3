@@ -121,6 +121,7 @@ def blitRotate(surf, image, pos, originPos, angle):
 
 
 def main():
+    # Run either Paperbot or Segway sim since matplotlib will complain about > 20 plots otherwise
     PAPERBOT_SIM = True
 
     if PAPERBOT_SIM:
@@ -133,7 +134,7 @@ def main():
                 robot = Agent(init_state, P['w'], P['l'], P['d'], P['roomWidth'], P['roomHeight'],
                               P['maxrpm'], P['lstddev'], P['astddev'], P['mstddev'])
                 loop(robot, PAPERBOT_INPUT_FILES[i], PAPERBOT_COMPARISON_FILES[i], PAPERBOT_PLOT_NAMES[i])
-                print(PAPERBOT_INPUT_FILES[i], "ploted")
+                print(PAPERBOT_INPUT_FILES[i], "plotted")
 
     if not PAPERBOT_SIM:
         with open("SegwayParameters.yml") as pFile:
@@ -145,7 +146,7 @@ def main():
                 robot = Agent(init_state, P['w'], P['l'], P['d'], P['roomWidth'], P['roomHeight'],
                               P['maxrpm'], P['lstddev'], P['astddev'], P['mstddev'])
                 loop(robot, SEGWAY_INPUT_FILES[i], SEGWAY_COMPARISON_FILES[i], SEGWAY_PLOT_NAMES[i])
-                print(SEGWAY_INPUT_FILES[i], "ploted")
+                print(SEGWAY_INPUT_FILES[i], "plotted")
 
 if __name__ == "__main__":
     main()
