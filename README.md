@@ -1,5 +1,12 @@
 # ECE183DA-Lab3
 
+## Usage:
+* run controller.py with no arguments
+* output data will be stored in analytic_outputs
+* output plots will be stored in saved_plots
+* All the paths for either the Paperbot or the Segway will be simulated at once
+  * you can determine which one by changing *PAPERBOT_SIM* to True or False in **main()** of *controller.py*
+
 ### robot.py
 * Includes definition of the **Agent** class that is the subject of the simulation. 
 * Using the parameters loaded from one of two yaml files, an **Agent** can be instantiated as either a Paperbot or a Segway.
