@@ -28,7 +28,7 @@
     * Trajectory (X pos vs Y pos)
     
 ### analytic_inputs/generate_paths.py
-* The webots simulation used functions to set the wheel velocities to fixed values for certain time periods, but the analytical simulation set the wheel velocities based on the CSV input files
+* The webots simulation got its inputs from a function that returned different values for different time periods, but the analytical simulation inputs came from reading one line at a time from an input file
 * **create_input_file_from_func()**: converts a function defining the path into a CSV file that can be used by our simulation
 * **path_N()**: a python translation of the Nth path that was used in the webots simulation
 
@@ -39,7 +39,7 @@
     * Second column is for the right wheel inputs
     
 ### analytic_outputs/ and webots_outputs/
-* contains the outputs of all the different simulation
+* contains the outputs of all the different simulations
 * Each is a CSV with 9 columns
     * Column 1 is the time, with a time step of 5 ms
     * Columns 2-3 are the Front and Right Lidar readings, respectively
